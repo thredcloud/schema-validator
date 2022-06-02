@@ -1,3 +1,3 @@
 # thred-schema-validator
 
-JSON Schema validator for URL $id and $ref
+Node-red JSON Schema validator node for schemas with URL-based $id and $ref.
