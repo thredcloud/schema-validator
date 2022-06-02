@@ -1,0 +1,28 @@
+{
+  "name": "thred-schema-validator",
+  "version": "1.0.0",
+  "description": "JSON Schema validator for Thred datapoint schemas",
+  "main": "thred-schema-validator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/thrednz/thred-schema-validator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/thrednz/thred-schema-validator/issues"
+  },
+  "homepage": "https://gitlab.com/thrednz/thred-schema-validator#readme",
+  "node-red": {
+    "nodes": {
+      "thred-schema-validator": "thred-schema-validator.js"
+    }
+  },
+  "dependencies": {
+    "ajv": "^8.11.0",
+    "axios": "^0.27.2"
+  }
+}
