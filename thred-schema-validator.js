@@ -18,14 +18,7 @@ module.exports = function(RED) {
               const response = await axios.get(url);
               return response.data
             } catch (error) {
-                err = error;
-                if (done) {
-                  // Node-RED 1.0 compatible
-                    done(err);
-                } else {
-                    // Node-RED 0.x compatible
-                    node.error(err, msg);
-                }
+                throw Error(error);
             }
 
           }
@@ -37,6 +30,7 @@ module.exports = function(RED) {
               let validate_obj;
               let valid;
               let errors;
+              let schema;
               // check if valid
               let is_valid = ajv.getSchema(msg.schema_id);
               // if valid, validate
@@ -44,10 +38,15 @@ module.exports = function(RED) {
                 validate_obj = is_valid;
               } else {
                 // fetch schema
-                let schema = await loadSchema(schema_id);
+                try {
+                  schema = await loadSchema(schema_id);
+                } catch (err) {
+                  throw Error(err)
+              }
                 // validate
                 validate_obj = await ajv.compileAsync(schema);
               }
+              // return
               valid = validate_obj(payload);
               errors = validate_obj.errors;
               return [valid, errors]
@@ -55,22 +54,14 @@ module.exports = function(RED) {
 
             let validation = validate(msg.schema_id, msg.payload)
               .then(function (r) {
-                // console.log(r);
                 msg.validation = {
                   "valid": r[0],
                   "errors": r[1]
                 };
                 send(msg);
               })
-              .catch(function (error) {
-                err = error;
-                if (done) {
-                    // Node-RED 1.0 compatible
-                    done(err);
-                } else {
-                    // Node-RED 0.x compatible
-                    node.error(err, msg);
-                }
+              .catch(function (err) {
+                done(err);
               });
 
           });

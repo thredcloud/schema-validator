@@ -10,111 +10,44 @@
         inputs:1,
         outputs:1,
         icon: "font-awesome/fa-check-square-o",
-        label: "validator",
+        label: function() {
+            return this.name||"validator";
+        },
         paletteLabel: "thred schema validator"
     });
 </script>
 
 <script type="text/html" data-template-name="thred-validator">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i>Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
+    <div class="form-tips"><b>Tip:</b> This is here to help.</div>
 </script>
+
 
 <script type="text/html" data-help-name="thred-validator">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
-</script>
-
-
-
-
-
-
-
-<!-- <script type="text/javascript">
-    RED.nodes.registerType('thred-delete',{
-        category: 'storage',
-        color: '#C0C0C0',
-        defaults: {
-            name: {value:""},
-	    path: {value: ""},
-            pathType: {value: "str"},
-	    filename: {value: ""},
-            filenameType: {value: "msg"}
-        },
-        inputs:1,
-        outputs:1,
-        icon: "font-awesome/fa-trash-o",
-        label: function() {
-            return this.name||"delete folder";
-        },
-        oneditprepare: function() {
-            if (!this.pathType) {
-                this.pathType = 'str';
-            }
-            $("#node-input-path").typedInput({
-                default: 'str',
-                types: ['str','msg','flow','global','env'],
-                typeField: $("#node-input-pathType")
-            });
-
-            if (!this.filenameType) {
-                this.filenameType = 'msg';
-            }
-            $("#node-input-filename").typedInput({
-                default: 'msg',
-                types: ['str','msg','flow','global'],
-                typeField: $("#node-input-filenameType")
-            });
-
-        }
-    });
-</script>
-
-<script type="text/html" data-template-name="thred-delete">
-    <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-    <div class="form-row">
-        <label for="node-input-path"><i class="fa fa-folder"></i> Path</label>
-        <input type="text" id="node-input-path" placeholder="Path of file to delete" style="width:250px;">
-        <input type="hidden" id="node-input-pathType">
-    </div>
-    <div class="form-row">
-        <label for="node-input-filename"><i class="fa fa-file"></i> Filename</label>
-        <input type="text" id="node-input-filename" placeholder="File to delete" style="width:250px;">
-        <input type="hidden" id="node-input-filenameType">
-    </div>
-</script>
-
-<script type="text/html" data-help-name="thred-delete">
-    <p>Deletes a file on host filesystem.</p>
-    <h3>Properties</h3>
-    <dl class="message-properties">
-        <dt>name
-            <span class="property-type">string</span>
-        </dt>
-        <dd>Name of node to be displayed in editor</dd>
-        <dt>source path<span class="property-type">string</span></dt>
-        <dd>Path of directory containing file to be deleted</dd>
-        <dt>source filename<span class="property-type">string|array of string</span></dt>
-        <dd>Name/s of file/s to be deleted</dd>
-    </dl>
+    <p>A URL-based schema validator.</p>
     <h3>Inputs</h3>
     <dl class="message-properties">
-    <p>Any</p>
+        <dt>payload
+            <span class="property-type">object</span>
+        </dt>
+        <dd>The payload to be validated</dd>
+        <dt>schema_id<span class="property-type">string</span></dt>
+        <dd>The $id of the schema, which is a resolvable URL</dd>
     </dl>
     <h3>Outputs</h3>
     <dl class="message-properties">
-    <p>Input message is passed unchanged if no errors occur.</p>
+        <dt>payload
+            <span class="property-type">object</span>
+        </dt>
+        <dd>The input payload, untouched</dd>
+        <dt>validation<span class="property-type">object</span></dt>
+        <dd>A validation object containing the results of the validation process</dd>
     </dl>
 
     <h3>Details</h3>
-    <p>Deletes the specified files from the local filesystem. </p>
-    <p>If an array of filenames is passed
-    in, such as from the file-ops-dir node, then each file will be deleted.</p>
-
-    <p>Message is actioned and passed through unchanged if no error is encountered.</p>
-</script> -->
+    <p>Validates JSON schemas that have a URI-based $id and $ref</p>
+    <p>For more information, see <a href="https://json-schema.org/"> json-schema.org</a></p>
+</script>
