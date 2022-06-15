@@ -42,9 +42,10 @@
         <dt>payload
             <span class="property-type">object</span>
         </dt>
-        <dd>The input payload, untouched</dd>
-        <dt>validation<span class="property-type">object</span></dt>
-        <dd>A validation object containing the results of the validation process</dd>
+        <dd>The input payload will be reproduced with additional keys <span style="color:blue;font-weight:bold">$id</span> (the schema_id that was provided as an input), 
+            <span style="color:blue;font-weight:bold">$valid</span> (a boolean property indicating whether it passed validation or not), and <span style="color:blue;font-weight:bold">$errors</span> (an array of errors - only defined if $valid is false).
+            If any of the above keys already exist in the input payload, they will be overwritten.
+        </dd>
     </dl>
 
     <h3>Details</h3>

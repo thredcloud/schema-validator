@@ -54,10 +54,15 @@ module.exports = function(RED) {
 
             let validation = validate(msg.schema_id, msg.payload)
               .then(function (r) {
-                msg.validation = {
-                  "valid": r[0],
-                  "errors": r[1]
-                };
+                msg.payload.$id = msg.schema_id;
+                msg.payload.$valid = r[0];
+                if (r[1] !== null) {
+                  msg.payload.$errors = r[1];
+                }
+                // msg.validation = {
+                //   "valid": r[0],
+                //   "errors": r[1]
+                // };
                 send(msg);
               })
               .catch(function (err) {
